@@ -1,0 +1,27 @@
+@use 'variables' as *;
+
+// Mobile-first: aplica los estilos desde el ancho indicado en adelante
+@mixin from($bp) {
+  @media (min-width: $bp) {
+    @content;
+  }
+}
+
+@mixin card($pad: 1.25rem) {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+  box-shadow: $shadow;
+  padding: $pad;
+}
+
+@mixin focus-ring {
+  outline: 3px solid rgba($color-primary, 0.35);
+  outline-offset: 2px;
+}
+
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

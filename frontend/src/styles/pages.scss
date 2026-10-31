@@ -1,0 +1,424 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ---------- Login ----------
+.login {
+  min-height: 100vh;
+  display: grid;
+  @include from($bp-lg) {
+    grid-template-columns: 1.1fr 1fr;
+  }
+  &__hero {
+    background: linear-gradient(135deg, $color-primary 0%, #7c3aed 60%, $color-accent 130%);
+    color: #fff;
+    padding: 2.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    h1 {
+      font-size: 2.1rem;
+    }
+    ul {
+      padding-left: 1.2rem;
+      line-height: 1.9;
+    }
+  }
+  &__panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+  &__box {
+    @include card(1.75rem);
+    width: 100%;
+    max-width: 420px;
+  }
+}
+
+// ---------- Search & tutor cards ----------
+.filters {
+  @include card;
+  position: static;
+  @include from($bp-lg) {
+    position: sticky;
+    top: 74px;
+  }
+  &__toggle {
+    @include from($bp-lg) {
+      display: none;
+    }
+  }
+  &__body {
+    display: none;
+    &.is-open {
+      display: block;
+    }
+    @include from($bp-lg) {
+      display: block;
+    }
+  }
+}
+.tutor-card {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  &__body {
+    flex: 1;
+    min-width: 0;
+  }
+  &__name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: $color-text;
+  }
+  &__bio {
+    color: $color-muted;
+    font-size: 0.9rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  &__price {
+    text-align: right;
+    flex-shrink: 0;
+    strong {
+      font-size: 1.15rem;
+      display: block;
+    }
+  }
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.35rem 0;
+}
+
+// ---------- Map ----------
+.map {
+  height: 280px;
+  border-radius: $radius;
+  overflow: hidden;
+  border: 1px solid $color-border;
+  z-index: 0;
+  &--lg {
+    height: 340px;
+  }
+}
+.leaflet-container {
+  font-family: $font;
+}
+
+// ---------- Price breakdown ----------
+.breakdown {
+  width: 100%;
+  border-collapse: collapse;
+  td {
+    padding: 0.35rem 0;
+    border-bottom: 1px dashed $color-border;
+  }
+  td:last-child {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  tr.total td {
+    font-weight: 800;
+    font-size: 1.1rem;
+    border-bottom: none;
+    padding-top: 0.6rem;
+  }
+}
+
+// ---------- Slots ----------
+.slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.slot {
+  padding: 0.35rem 0.7rem;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  background: #fff;
+  cursor: pointer;
+  font: inherit;
+  &:hover {
+    border-color: $color-primary;
+  }
+  &.is-on {
+    background: $color-primary;
+    color: #fff;
+    border-color: $color-primary;
+  }
+}
+
+// ---------- Availability grid ----------
+.avail {
+  overflow-x: auto;
+  &__table {
+    border-collapse: separate;
+    border-spacing: 2px;
+    min-width: 560px;
+    width: 100%;
+    th {
+      font-size: 0.75rem;
+      color: $color-muted;
+      font-weight: 600;
+      padding: 0.2rem;
+    }
+    td.time {
+      font-size: 0.7rem;
+      color: $color-muted;
+      text-align: right;
+      padding-right: 0.4rem;
+      white-space: nowrap;
+    }
+  }
+  &__cell {
+    height: 20px;
+    border-radius: 4px;
+    background: #eef0f6;
+    cursor: pointer;
+    user-select: none;
+    touch-action: none;
+    &.is-on {
+      background: $color-accent;
+    }
+    &:hover {
+      outline: 2px solid $color-primary;
+    }
+  }
+}
+
+// ---------- Calendar ----------
+.calendar-wrap {
+  @include card(0.75rem);
+  .fc {
+    font-size: 0.88rem;
+  }
+  .fc-toolbar {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .fc-toolbar-title {
+    font-size: 1.1rem;
+  }
+  .fc-event {
+    cursor: pointer;
+  }
+  .fc-button-primary {
+    background: $color-primary;
+    border-color: $color-primary;
+    &:disabled {
+      background: lighten($color-primary, 15%);
+      border-color: lighten($color-primary, 15%);
+    }
+    &:not(:disabled):active,
+    &.fc-button-active {
+      background: $color-primary-dark;
+      border-color: $color-primary-dark;
+    }
+  }
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.82rem;
+  margin-bottom: 0.5rem;
+  span::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    margin-right: 0.35rem;
+    background: var(--c);
+  }
+}
+
+// ---------- Chat ----------
+.chat {
+  display: grid;
+  gap: 1rem;
+  height: calc(100vh - 150px);
+  min-height: 420px;
+  @include from($bp-md) {
+    grid-template-columns: 300px 1fr;
+  }
+  &__list,
+  &__thread {
+    @include card(0);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  &__list {
+    overflow-y: auto;
+    &.is-hidden {
+      display: none;
+      @include from($bp-md) {
+        display: flex;
+      }
+    }
+  }
+  &__thread.is-hidden {
+    display: none;
+    @include from($bp-md) {
+      display: flex;
+    }
+  }
+  &__item {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    padding: 0.7rem 0.9rem;
+    border: none;
+    border-bottom: 1px solid $color-border;
+    background: none;
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+    &:hover,
+    &.is-active {
+      background: $color-primary-soft;
+    }
+    &-text {
+      flex: 1;
+      min-width: 0;
+      strong,
+      small {
+        display: block;
+        @include truncate;
+      }
+      small {
+        color: $color-muted;
+      }
+    }
+  }
+  &__head {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid $color-border;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 700;
+  }
+  &__messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: #fafbff;
+  }
+  &__form {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border-top: 1px solid $color-border;
+  }
+}
+.bubble {
+  max-width: 80%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid $color-border;
+  align-self: flex-start;
+  word-break: break-word;
+  &--system {
+    align-self: center;
+    max-width: 90%;
+    text-align: center;
+    background: #fef3c7;
+    border-color: #fcd34d;
+    color: #78350f;
+    .bubble__meta {
+      text-align: center;
+    }
+  }
+  &--mine {
+    align-self: flex-end;
+    background: $color-primary;
+    color: #fff;
+    border-color: $color-primary;
+  }
+  &__meta {
+    font-size: 0.7rem;
+    opacity: 0.75;
+    text-align: right;
+    margin-top: 0.15rem;
+  }
+}
+
+// ---------- Stats / dashboard ----------
+.stat {
+  @include card(1rem);
+  &__value {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: $color-primary;
+    line-height: 1;
+  }
+  &__label {
+    color: $color-muted;
+    font-size: 0.85rem;
+  }
+}
+.chart-card {
+  @include card;
+  h3 {
+    margin-bottom: 0.75rem;
+  }
+}
+.ranking {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  li {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.45rem 0;
+    border-bottom: 1px solid $color-border;
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+// ---------- Tabs ----------
+.tabs {
+  display: flex;
+  gap: 0.25rem;
+  border-bottom: 1px solid $color-border;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+  button {
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 0.6rem 0.9rem;
+    font: inherit;
+    font-weight: 600;
+    color: $color-muted;
+    cursor: pointer;
+    white-space: nowrap;
+    &.is-on {
+      color: $color-primary;
+      border-color: $color-primary;
+    }
+  }
+}
+
+// ---------- Suspension ----------
+.suspension {
+  max-width: 640px;
+  margin: 2rem auto;
+}

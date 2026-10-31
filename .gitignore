@@ -1,0 +1,12 @@
+node_modules/
+dist/
+build/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+coverage/
+
+# Capturas para los manuales (contienen datos personales, no se suben)
+evidencias/
