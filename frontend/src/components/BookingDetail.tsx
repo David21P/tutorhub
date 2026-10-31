@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { api, errorMessage } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
@@ -18,6 +19,7 @@ interface Props {
 export function BookingDetail({ booking: b, onClose, onChanged }: Props) {
   const { user } = useAuth();
   const toast = useToast();
+  const navigate = useNavigate();
   const [busy, setBusy] = useState(false);
   const [mode, setMode] = useState<'view' | 'review' | 'report' | 'cancel'>('view');
   const [rating, setRating] = useState(5);
@@ -28,6 +30,16 @@ export function BookingDetail({ booking: b, onClose, onChanged }: Props) {
 
   const isTutor = user?.id === b.tutor_id;
   const counterpart = isTutor ? b.student_name : b.tutor_name;
+
+  const openChat = async () => {
+    try {
+      const r = await api.post<{ id: string }>('/chat/conversations', isTutor ? { student_id: b.student_id } : { tutor_id: b.tutor_id });
+      onClose();
+      navigate(`/chat?c=${r.data.id}`);
+    } catch (err) {
+      toast.error(errorMessage(err));
+    }
+  };
   const counterpartId = isTutor ? b.student_id : b.tutor_id;
   const future = dt(b.starts_at) > dt(new Date().toISOString());
 
@@ -172,12 +184,15 @@ export function BookingDetail({ booking: b, onClose, onChanged }: Props) {
         />
 
         <div className="row">
+          <button className="btn btn--secondary btn--sm" onClick={() => void openChat()}>
+            Enviar mensaje
+          </button>
           <a className="btn btn--whatsapp btn--sm" href={whatsappShareUrl(shareText)} target="_blank" rel="noopener noreferrer">
             Compartir por WhatsApp
           </a>
           {b.counterpart_phone && (
             <a className="btn btn--secondary btn--sm" href={whatsappShareUrl(`Hola ${counterpart}, te escribo por la tutoría del ${fmtDateTime(b.starts_at)}.`, b.counterpart_phone)} target="_blank" rel="noopener noreferrer">
-              Escribir a {counterpart.split(' ')[0]}
+              WhatsApp de {counterpart.split(' ')[0]}
             </a>
           )}
         </div>

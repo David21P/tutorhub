@@ -28,13 +28,37 @@ chatRouter.get(
   }),
 );
 
-/** Un estudiante abre (o recupera) la conversación con un tutor. */
+/**
+ * Abre (o recupera) una conversación. El estudiante la abre con un tutor aprobado (tutor_id);
+ * el tutor la abre con un alumno con el que tiene al menos una tutoría registrada (student_id).
+ */
 chatRouter.post(
   '/conversations',
-  requireRole('student'),
   handler(async (req, res) => {
     const user = me(req);
-    const { tutor_id } = parse(z.object({ tutor_id: z.string().uuid() }), req.body);
+    const { tutor_id, student_id } = parse(
+      z.object({ tutor_id: z.string().uuid().optional(), student_id: z.string().uuid().optional() }),
+      req.body,
+    );
+
+    if (user.role === 'tutor') {
+      if (!student_id) throw badRequest('Indique el estudiante.');
+      const shared = await queryOne(
+        `SELECT 1 FROM bookings b JOIN users u ON u.id = b.student_id
+          WHERE b.tutor_id = $1 AND b.student_id = $2 AND u.status = 'active' LIMIT 1`,
+        [user.id, student_id],
+      );
+      if (!shared) throw notFound('Estudiante no encontrado.');
+      const conv = await queryOne<{ id: string }>(
+        `INSERT INTO conversations (student_id, tutor_id) VALUES ($1, $2)
+         ON CONFLICT (student_id, tutor_id) DO UPDATE SET student_id = EXCLUDED.student_id RETURNING id`,
+        [student_id, user.id],
+      );
+      res.status(201).json({ id: conv?.id });
+      return;
+    }
+
+    if (user.role !== 'student' || !tutor_id) throw badRequest('Indique el tutor.');
     const tutor = await queryOne(
       `SELECT u.id FROM users u JOIN tutor_profiles tp ON tp.user_id = u.id
         WHERE u.id = $1 AND u.status = 'active' AND tp.approval_status = 'approved'`,
