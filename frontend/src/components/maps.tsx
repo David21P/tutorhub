@@ -14,8 +14,8 @@ const GUATEMALA: [number, number] = [14.6349, -90.5069];
 const TILES = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 
-const studentIcon = L.divIcon({ className: '', html: '<div style="font-size:26px;line-height:1">📍</div>', iconSize: [26, 26], iconAnchor: [13, 24] });
-const tutorIcon = L.divIcon({ className: '', html: '<div style="font-size:26px;line-height:1">🎓</div>', iconSize: [26, 26], iconAnchor: [13, 24] });
+const studentIcon = L.divIcon({ className: '', html: '<div style="width:18px;height:18px;border-radius:50%;background:#4f46e5;border:3px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.45)"></div>', iconSize: [18, 18], iconAnchor: [9, 9] });
+const tutorIcon = L.divIcon({ className: '', html: '<div style="width:18px;height:18px;border-radius:50%;background:#0d9488;border:3px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.45)"></div>', iconSize: [18, 18], iconAnchor: [9, 9] });
 
 function ClickHandler({ onPick }: { onPick: (lat: number, lng: number) => void }) {
   useMapEvents({ click: (e) => onPick(e.latlng.lat, e.latlng.lng) });

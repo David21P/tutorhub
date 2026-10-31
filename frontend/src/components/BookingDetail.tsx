@@ -45,7 +45,7 @@ export function BookingDetail({ booking: b, onClose, onChanged }: Props) {
     }
   };
 
-  const shareText = `📚 Tutoría de ${b.offer_title}\n👤 ${isTutor ? 'Estudiante' : 'Tutor'}: ${counterpart}\n⏰ ${fmtDateTime(b.starts_at)} – ${fmtTime(b.ends_at)}\n📍 ${MODALITY_LABEL[b.modality]}\n💰 Total: Q${b.total_amount.toFixed(2)}`;
+  const shareText = `Tutoría de ${b.offer_title}\n${isTutor ? 'Estudiante' : 'Tutor'}: ${counterpart}\nHorario: ${fmtDateTime(b.starts_at)} – ${fmtTime(b.ends_at)}\nModalidad: ${MODALITY_LABEL[b.modality]}\nTotal: Q${b.total_amount.toFixed(2)}`;
 
   const hasRouteData = b.modality !== 'virtual' && b.tutor_lat != null && b.tutor_lng != null && b.student_lat != null && b.student_lng != null;
 
@@ -201,7 +201,7 @@ export function BookingDetail({ booking: b, onClose, onChanged }: Props) {
           )}
           {!isTutor && b.status === 'completed' && !b.reviewed && (
             <button className="btn" onClick={() => setMode('review')}>
-              ⭐ Calificar
+              Calificar
             </button>
           )}
           {b.status === 'completed' && b.reviewed && !isTutor && <span className="muted small">Ya calificó esta tutoría.</span>}

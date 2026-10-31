@@ -117,8 +117,8 @@ export default function Onboarding({ editing = false }: { editing?: boolean }) {
           <div className="grid grid--2">
             {(
               [
-                ['student', '🎒 Soy estudiante', 'Busco tutores para aprender.'],
-                ['tutor', '🧑‍🏫 Soy tutor', 'Quiero ofrecer mis clases.'],
+                ['student', 'Soy estudiante', 'Busco tutores para aprender.'],
+                ['tutor', 'Soy tutor', 'Quiero ofrecer mis clases.'],
               ] as const
             ).map(([value, title, text]) => (
               <button

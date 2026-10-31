@@ -196,7 +196,7 @@ export default function Search() {
                 <strong>{money(t.min_rate)}</strong>
                 <span className="muted small">por hora</span>
                 <div className="small" style={{ marginTop: 6 }}>
-                  📍 {kmLabel(t.distance_km)}
+                  {kmLabel(t.distance_km)}
                 </div>
               </div>
             </article>

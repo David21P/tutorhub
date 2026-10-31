@@ -75,7 +75,7 @@ export function Layout() {
       <header className="navbar">
         <div className="navbar__inner">
           <Link to="/" className="navbar__brand">
-            🎓 TutorHub
+            TutorHub
           </Link>
           <button className="navbar__toggle" onClick={() => setOpen((o) => !o)} aria-label="Menú" aria-expanded={open}>
             ☰

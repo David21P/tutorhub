@@ -85,12 +85,12 @@ export default function Tutors() {
             <div className="row">
               {t.cv_file_id && (
                 <button className="btn btn--secondary btn--sm" onClick={() => openFile(t.cv_file_id as string).catch((e) => toast.error(errorMessage(e)))}>
-                  📄 Hoja de vida
+                  Hoja de vida
                 </button>
               )}
               {t.portfolio_url && (
                 <a className="btn btn--secondary btn--sm" href={t.portfolio_url} target="_blank" rel="noopener noreferrer">
-                  🔗 Portafolio
+                  Portafolio
                 </a>
               )}
               {t.approval_status !== 'approved' && (

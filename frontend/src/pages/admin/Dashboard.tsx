@@ -119,8 +119,8 @@ export default function Dashboard() {
       </section>
 
       <div className="grid grid--2">
-        <RankList title="🏆 Mejores tutores" items={stats.best_tutors} />
-        <RankList title="⚠️ Tutores con menor calificación" items={stats.worst_tutors} />
+        <RankList title="Mejores tutores" items={stats.best_tutors} />
+        <RankList title="Tutores con menor calificación" items={stats.worst_tutors} />
       </div>
 
       <div className="grid grid--2">

@@ -9,7 +9,7 @@
     grid-template-columns: 1.1fr 1fr;
   }
   &__hero {
-    background: linear-gradient(135deg, $color-primary 0%, #7c3aed 60%, $color-accent 130%);
+    background: linear-gradient(135deg, $color-hero 0%, $color-hero-light 100%);
     color: #fff;
     padding: 2.5rem 1.5rem;
     display: flex;
@@ -18,10 +18,18 @@
     gap: 1rem;
     h1 {
       font-size: 2.1rem;
+      letter-spacing: 0.02em;
+    }
+    p {
+      color: $color-hero-text;
     }
     ul {
       padding-left: 1.2rem;
       line-height: 1.9;
+      color: $color-hero-text;
+      li::marker {
+        color: $color-accent-soft;
+      }
     }
   }
   &__panel {

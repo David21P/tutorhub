@@ -42,7 +42,7 @@ export default function Login() {
   return (
     <div className="login">
       <section className="login__hero">
-        <h1>🎓 TutorHub</h1>
+        <h1>TutorHub</h1>
         <p>El marketplace educativo que conecta a estudiantes con tutores verificados.</p>
         <ul>
           <li>Busque tutores por cercanía, precio, calificación y modalidad</li>

@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { TutorDetail } from '../types';
 import { openFile } from '../utils/files';
-import { MODALITY_LABEL, WEEKDAYS, kmLabel, minutesToLabel, money } from '../utils/format';
+import { MODALITY_LABEL, WEEKDAYS, kmLabel, minutesToLabel, money, whatsappShareUrl } from '../utils/format';
 
 export default function TutorProfile() {
   const { id } = useParams();
@@ -38,6 +38,16 @@ export default function TutorProfile() {
     }
   };
 
+  const baseRate = offers.length ? Math.min(...offers.map((o) => o.hourly_rate)) : null;
+  const shareText = [
+    `${tutor.name} en TutorHub`,
+    offers.length ? `Ofrece: ${offers.map((o) => o.title).join(', ')}` : null,
+    baseRate !== null ? `Tarifa base desde ${money(baseRate)} por hora` : null,
+    `Ver perfil: ${window.location.origin}/tutor/${tutor.id}`,
+  ]
+    .filter(Boolean)
+    .join('\n');
+
   const byDay = WEEKDAYS.map((name, i) => ({
     name,
     blocks: availability.filter((a) => a.weekday === i + 1),
@@ -53,7 +63,7 @@ export default function TutorProfile() {
               <h1 style={{ marginBottom: 4 }}>{tutor.name}</h1>
               <Stars value={tutor.rating_avg} count={tutor.rating_count} />
               <div className="muted small">
-                📍 {tutor.address ?? 'Ubicación no indicada'} · a {kmLabel(tutor.distance_km)} de usted
+                {tutor.address ?? 'Ubicación no indicada'} · a {kmLabel(tutor.distance_km)} de usted
               </div>
             </div>
           </div>
@@ -61,17 +71,20 @@ export default function TutorProfile() {
           <div className="row">
             {user?.role === 'student' && (
               <button className="btn btn--secondary" onClick={() => void startChat()}>
-                💬 Enviar mensaje
+                Enviar mensaje
               </button>
             )}
             {tutor.cv_file_id && (
               <button className="btn btn--secondary" onClick={() => openFile(tutor.cv_file_id as string).catch((e) => toast.error(errorMessage(e)))}>
-                📄 Ver hoja de vida
+                Ver hoja de vida
               </button>
             )}
+            <a className="btn btn--whatsapp" href={whatsappShareUrl(shareText)} target="_blank" rel="noopener noreferrer">
+              Compartir perfil
+            </a>
             {tutor.portfolio_url && (
               <a className="btn btn--secondary" href={tutor.portfolio_url} target="_blank" rel="noopener noreferrer">
-                🔗 Portafolio
+                Portafolio
               </a>
             )}
           </div>
